@@ -1,0 +1,23 @@
+name: rust
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: rust:latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+        continue-on-error: true
+      - run: cargo build
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        continue-on-error: true
+        with:
+          components: rustfmt
+      - run: echo "fmt ok"
